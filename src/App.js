@@ -11,10 +11,12 @@ import {
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
+import ReactFCCtest from 'react-fcctest';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
+      <ReactFCCtest/>
       <Box textAlign="center" fontSize="xl">
         <Grid minH="100vh" p={3}>
           <ColorModeSwitcher justifySelf="flex-end" />
