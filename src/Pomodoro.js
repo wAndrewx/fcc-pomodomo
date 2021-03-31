@@ -11,7 +11,7 @@ const Pomodoro = () => {
     });
     // const [{ playPause, session }, setToggle] = useState({ playPause: false, session: 1 }); // session 1 = pomoclock , session 2 = breakclock
     //figure out timer| once pomoclock reaches zero, unmount and mount/call 
-    let minute = moment.duration(pomoTime, 'minute').minutes();
+    let minute = moment.duration(pomoTime, 'minute').asMinutes();
     let seconds = moment.duration(pomoTime, 'second').minutes();
     console.log(minute)
     const handleTime = (increaseOrDecrease, type) => {

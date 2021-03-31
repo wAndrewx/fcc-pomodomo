@@ -10,7 +10,7 @@ import Pomodoro from "./Pomodoro.js";
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      {/* <ReactFCCtest/> */}
+      <ReactFCCtest/>
       <Pomodoro/>
     </ChakraProvider>
   );
