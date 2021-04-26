@@ -1,9 +1,6 @@
 import { chakra,Button,HStack } from "@chakra-ui/react";
 
 
-export const SessionButtons=(props)=>{
+export const BreakButtons = (props)=>{
     
 }
-
-
-
