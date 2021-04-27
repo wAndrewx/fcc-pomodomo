@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { VStack, Text } from '@chakra-ui/react';
 import { BreakButtons } from './components/BreakInterval'
 import { SessionSet } from './components/SessionSetters'
@@ -12,29 +12,51 @@ const Pomodoro = () => {
         breakTime: 300,
         pomoTime: 1500,
     });
-    const [{ isPlaying }, setToggle] = useState({ isPlaying: false }); // session 1 = pomoclock , session 2 = breakclock
-    const [{ sessionType }, setSession] = useState({ sessionType: 1 })
+    const [{ isPlaying }, setPlaying] = useState(false);
+    const [sessionType, setSession] = useState(1);// session 1 = pomoclock , session 2 = breakclock
     //figure out timer| once pomoclock reaches zero, unmount and mount/call 
+    const pointerTime = useRef(1500)
 
-    // const handleSessionStart = (isPlaying) => {
 
-    //     if (isPlaying) {
-    //         setInterval(() => {
-    //             console.log("hello");
 
-    //             setTime(state => ({
-    //                 ...state, pomoTime: pomoTime - 1,
-    //             }))
-    //         }, 1000);
-    //     } else { // if isPlaying is not true then stop tyimer 
-    //         clearInterval(handleSessionStart)
-    //     }
-    // }
+    useEffect(() => {
+        //when session is changed render other timer
+        let timer = null;
+        if (isPlaying && pomoTime > 0) {
+            timer = setInterval(() => {
+                console.log("test")
+                setTime((state) => ({
+                    ...state, pomoTime: pomoTime + 1
+                }))
+            }, 1000);
+        } else {
+            clearInterval(timer)
 
-    // when you get here i think you learn about handling mounts 
-    //and dismounts, apply knowledge when pomotime is done dismount and mount breaktime yadda yadda
-    const handleSessionType = (sessionType) => {
+        }
 
+        return () => {
+            clearInterval(timer)
+            console.log("cleaned")
+        }
+    }, [sessionType, isPlaying, pomoTime])
+
+    const handlePlayBool = ()=>{
+        setPlaying(!isPlaying)
+    }
+    const switchSession = () => {
+        if (pomoTime === 0) {
+            setSession(() => ({
+                sessionType: 2 // break
+            }))
+            pointerTime.current = breakTime
+            console.log(pointerTime.current)
+        } else if (breakTime === 0) {
+            setSession(() => ({
+                sessionType: 1 //pomo
+            }))
+            pointerTime.current = pomoTime
+            console.log(pointerTime.current)
+        }
     }
 
     const minuteHandler = (time) => {
@@ -83,6 +105,7 @@ const Pomodoro = () => {
         setTime(() => ({ pomoTime: 1500, breakTime: 300 }))
     }
 
+
     return (
         <div>
             {/* INCREMENT BREAK LENGTH */}
@@ -92,11 +115,12 @@ const Pomodoro = () => {
             {/* TIMER DISPLAY  */}
             <VStack border="1px" borderRadius="10px">
 
-                <SessionShow minuteHandle={minuteHandler(pomoTime)} secondsHandle={secondsHandler(pomoTime)} />
-                {/* <SessionShow minuteHandle={minuteHandler(pomoTime)} secondsHandle={secondsHandler()} /> */}
+                {sessionType === 1 && <SessionShow sessionType={"Session|"} minuteHandle={minuteHandler(pomoTime)} secondsHandle={secondsHandler(pomoTime)} onclick />}
+                {sessionType === 2 && <SessionShow sessionType={"Break|"} minuteHandle={minuteHandler(breakTime)} secondsHandle={secondsHandler(breakTime)} onclick />}
+
                 {/* SESSION MANIPULATION 
                  MAKE SURE YOU ALSO ADD IN HANDLESESSIONSECOND */}
-                <SessionSet resetTime={handleReset} />
+                <SessionSet handlePlay = {handlePlayBool} resetTime={handleReset} />
             </VStack>
         </div>
     );

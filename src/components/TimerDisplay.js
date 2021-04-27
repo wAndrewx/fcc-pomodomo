@@ -6,7 +6,7 @@ export const SessionShow = (props) => {
         <div>
             <Text id="timer-label"> </Text>
 
-            <Text id="time-left" >Session~~{props.minuteHandle + ":" + props.secondsHandle }</Text>
+            <Text id="time-left" >{props.sessionType} {props.minuteHandle + ":" + props.secondsHandle }</Text>
         </div>
     )
 }
