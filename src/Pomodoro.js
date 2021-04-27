@@ -18,30 +18,37 @@ const Pomodoro = () => {
     const pointerTime = useRef(1500)
 
 
+    useEffect(() => {
+        //when session is changed render other timer
+        let timer = null;
+        if (isPlaying && pomoTime > 0) {
+            timer = setInterval(() => {
+                console.log("test")
+                setTime((state) => ({
+                    ...state, pomoTime: pomoTime - 1
+                }))
+            }, 1000);
+        } else {
+            clearInterval(timer)
+            console.log("inside else block")
+        }
 
-    // useEffect(() => {
-    //     //when session is changed render other timer
-    //     let timer = null;
-    //     if (isPlaying && pomoTime > 0) {
-    //         timer = setInterval(() => {
-    //             console.log("test")
-    //             setTime((state) => ({
-    //                 ...state, pomoTime: pomoTime + 1
-    //             }))
-    //         }, 1000);
-    //     } else {
-    //         clearInterval(timer)
+        return () => {
+            clearInterval(timer)
+            console.log("cleaned")
+        }
+    }, [isPlaying, setPlaying])
 
-    //     }
-
-    //     return () => {
-    //         clearInterval(timer)
-    //         console.log("cleaned")
-    //     }
-    // }, [sessionType, isPlaying, pomoTime])
-
-    const handlePlayBool = ()=>{
-        setPlaying(!isPlaying)
+    const handlePlayBool = () => {
+        if (isPlaying) {
+            setPlaying(() => ({
+                isPlaying: false
+            }))
+        } else {
+            setPlaying(() => ({
+                isPlaying: true
+            }))
+        }
     }
     const switchSession = () => {
         if (pomoTime === 0) {
@@ -115,12 +122,12 @@ const Pomodoro = () => {
             {/* TIMER DISPLAY  */}
             <VStack border="1px" borderRadius="10px">
 
-                {sessionType === 1 && <SessionShow sessionType={"Session|"} minuteHandle={minuteHandler(pomoTime)} secondsHandle={secondsHandler(pomoTime)} onclick />}
-                {sessionType === 2 && <SessionShow sessionType={"Break|"} minuteHandle={minuteHandler(breakTime)} secondsHandle={secondsHandler(breakTime)} onclick />}
+                {sessionType === 1 && <SessionShow sessionType={"Session|"} minuteHandle={minuteHandler(pomoTime)} secondsHandle={secondsHandler(pomoTime)} />}
+                {sessionType === 2 && <SessionShow sessionType={"Break|"} minuteHandle={minuteHandler(breakTime)} secondsHandle={secondsHandler(breakTime)} />}
 
                 {/* SESSION MANIPULATION 
                  MAKE SURE YOU ALSO ADD IN HANDLESESSIONSECOND */}
-                <SessionSet handlePlay = {handlePlayBool} resetTime={handleReset} />
+                <SessionSet handlePlay={handlePlayBool} resetTime={handleReset} />
             </VStack>
         </div>
     );
