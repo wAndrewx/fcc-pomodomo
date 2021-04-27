@@ -3,7 +3,7 @@ import { VStack, Text } from '@chakra-ui/react';
 import { BreakButtons } from './components/BreakInterval'
 import { SessionSet } from './components/SessionSetters'
 import { SessionButtons } from './components/SessionInterval'
-import { SessionShow } from './components/SessionDisplay'
+import { SessionShow } from './components/TimerDisplay'
 
 
 const Pomodoro = () => {
@@ -12,23 +12,24 @@ const Pomodoro = () => {
         breakTime: 300,
         pomoTime: 1500,
     });
-    const [{ playPause, session }, setToggle] = useState({ isPlaying: false, sessionType: 1 }); // session 1 = pomoclock , session 2 = breakclock
+    const [{ isPlaying }, setToggle] = useState({ isPlaying: false }); // session 1 = pomoclock , session 2 = breakclock
+    const [{ sessionType }, setSession] = useState({ sessionType: 1 })
     //figure out timer| once pomoclock reaches zero, unmount and mount/call 
 
     // const handleSessionStart = (isPlaying) => {
-    //     // if (isPlaying) {
-    //     //     setInterval(() => {
-    //     //         console.log("hello");
 
-    //     //         setTime(state => ({
-    //     //             ...state, pomoTime: pomoTime - 1,
-    //     //         }))
-    //     //     }, 1000);
-    //     // } else { // if isPlaying is not true then stop tyimer 
-    //     //     clearInterval(handleSessionStart)
-    //     // }
+    //     if (isPlaying) {
+    //         setInterval(() => {
+    //             console.log("hello");
+
+    //             setTime(state => ({
+    //                 ...state, pomoTime: pomoTime - 1,
+    //             }))
+    //         }, 1000);
+    //     } else { // if isPlaying is not true then stop tyimer 
+    //         clearInterval(handleSessionStart)
+    //     }
     // }
-
 
     // when you get here i think you learn about handling mounts 
     //and dismounts, apply knowledge when pomotime is done dismount and mount breaktime yadda yadda
