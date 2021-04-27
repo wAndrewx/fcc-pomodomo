@@ -21,23 +21,22 @@ const Pomodoro = () => {
     useEffect(() => {
         //when session is changed render other timer
         let timer = null;
-        if (isPlaying && pomoTime > 0) {
+        let count = 1
+        if (isPlaying && pomoTime >= 0) {
             timer = setInterval(() => {
-                console.log("test")
                 setTime((state) => ({
                     ...state, pomoTime: pomoTime - 1
                 }))
+
             }, 1000);
         } else {
             clearInterval(timer)
-            console.log("inside else block")
         }
 
         return () => {
             clearInterval(timer)
-            console.log("cleaned")
         }
-    }, [isPlaying, setPlaying])
+    }, [isPlaying, setPlaying,pomoTime])
 
     const handlePlayBool = () => {
         if (isPlaying) {
