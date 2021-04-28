@@ -1,7 +1,7 @@
 import { Button, HStack, Text } from "@chakra-ui/react";
 
 //handling time function in parent
-export const SessionButtons = (props) => {
+export const SessionInterval = (props) => {
     const sessionStateTime = (incOrDec) => {
         props.sessionStateTime(incOrDec);
     }

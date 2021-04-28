@@ -1,7 +1,7 @@
 import { Button, HStack, Text } from "@chakra-ui/react";
 
 
-export const BreakButtons = (props) => {
+export const BreakInterval = (props) => {
 
     const breakTime = (isInc) => {
         props.breakStateTime(isInc);

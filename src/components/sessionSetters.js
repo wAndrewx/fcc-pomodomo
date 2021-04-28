@@ -1,7 +1,7 @@
 import { Button, HStack } from "@chakra-ui/react";
 
 
-export const SessionSet = (props) => {
+export const SessionSetters = (props) => {
 
     return (
         <div>
