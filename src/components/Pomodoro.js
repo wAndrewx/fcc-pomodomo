@@ -8,8 +8,8 @@ import { TimerDisplay } from './pomoUtils/TimerDisplay'
 
 const Pomodoro = () => {
     const [{ breakTime, pomoTime }, setTime] = useState({
-        breakTime: 3,
-        pomoTime: 4,
+        breakTime: 300,
+        pomoTime: 1500,
     });
     const [{ isPlaying }, setPlaying] = useState(false);
     const [sessionType, setSession] = useState(true);// session true = pomoclock , session false = breakclock
@@ -18,18 +18,23 @@ const Pomodoro = () => {
     console.log(timerPointer)
     useEffect(() => {
         let timer = null;
+        let extra = null
+
         if (isPlaying && timerPointer) {
             timer = setInterval(() => {
                 setPointer((time = 1) => time - 1)
 
             }, 1000);
-        } else if (timerPointer<1) {
-            setSession(!sessionType);
-            handleSwitch(!sessionType);
+        } else if (!timerPointer) {
+            extra = setInterval(() => {
+                setSession(!sessionType);
+                handleSwitch(!sessionType);
+            }, 1000);
             clearInterval(timer)
         }
         return () => {
             clearInterval(timer)
+            clearInterval(extra)
         }
     }, [isPlaying, setPlaying, timerPointer, setSession, sessionType, setPointer])
 
