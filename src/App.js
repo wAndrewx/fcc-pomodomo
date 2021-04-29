@@ -4,13 +4,12 @@ import {
   theme,
 } from '@chakra-ui/react';
 // import { ColorModeSwitcher } from './ColorModeSwitcher';
-import ReactFCCtest from 'react-fcctest';
-import Pomodoro from "./Pomodoro.js";
+
+import Pomodoro from "./components/Pomodoro";
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <ReactFCCtest/>
       <Pomodoro/>
     </ChakraProvider>
   );
